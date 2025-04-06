@@ -27,11 +27,11 @@ function sendMessage() {
       const respuesta = palabrasClave[palabra];
       if (respuesta === 'alerta') {
         emergencyBox.style.display = 'block';
-        appendMessage('Chatbot', 'Estoy preocupado por ti. Es importante que hables con alguien de confianza.');
+        appendMessage('Bot', 'Estoy preocupado por ti. Es importante que hables con alguien de confianza.');
         respuestaEncontrada = true;
         break;
       } else {
-        appendMessage('Chatbot', respuesta);
+        appendMessage('Bot', respuesta);
         respuestaEncontrada = true;
         break;
       }
@@ -39,7 +39,7 @@ function sendMessage() {
   }
 
   if (!respuestaEncontrada) {
-    appendMessage('Chatbot', 'Gracias por compartir conmigo. Estoy aquí para apoyarte.');
+    appendMessage('Bot', 'Gracias por compartir conmigo. Estoy aquí para apoyarte.');
   }
 
   localStorage.setItem('chatHistory', chatBox.innerHTML);
@@ -48,10 +48,22 @@ function sendMessage() {
 function appendMessage(remitente, mensaje) {
   const div = document.createElement('div');
   div.classList.add('message');
-  if (remitente === 'Usuario') div.classList.add('user');
-  div.innerText = `${remitente}: ${mensaje}`;
+
+  if (remitente === 'Usuario') {
+    div.classList.add('user');
+    div.innerText = `${remitente}: ${mensaje}`;
+  } else {
+    div.innerHTML = `
+      <div style="display: flex; align-items: center;">
+        <img src="images/bot-avatar.png" alt="Bot" style="width: 30px; height: 30px; margin-right: 10px; border-radius: 50%;">
+        <span>${mensaje}</span>
+      </div>
+    `;
+  }
+
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
+  localStorage.setItem('chatHistory', chatBox.innerHTML);
 }
 
 function guardarEstado() {
@@ -68,3 +80,4 @@ window.onload = () => {
   const historial = localStorage.getItem('chatHistory');
   if (historial) chatBox.innerHTML = historial;
 };
+
