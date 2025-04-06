@@ -1,67 +1,57 @@
 const chatBox = document.getElementById('chatBox');
 const emergencyBox = document.getElementById('emergencyBox');
 
-const respuestas = [
-  {
-    palabras: ['triste', 'me siento triste', 'estoy triste'],
-    respuesta: 'Siento que te sientes triste. ¿Quieres contarme qué ha pasado?'
-  },
-  {
-    palabras: ['rendir', 'me rindo', 'quiero rendirme'],
-    respuesta: 'No te rindas, lo estás haciendo mejor de lo que crees.'
-  },
-  {
-    palabras: ['no puedo más', 'agotado', 'cansado'],
-    respuesta: 'Es normal sentirse así a veces. Estoy contigo.'
-  },
-  {
-    palabras: ['solo', 'sola', 'me siento solo', 'me siento sola'],
-    respuesta: 'No estás solo/a, aquí estoy para escucharte.'
-  },
-  {
-    palabras: ['depresión', 'tengo depresión', 'estoy deprimido', 'estoy deprimida'],
-    respuesta: 'Gracias por confiarme cómo te sientes. Recuerda que hay ayuda disponible y tú vales mucho.'
-  },
-  {
-    palabras: ['suicidio', 'matarme', 'me quiero morir'],
-    alerta: true
-  }
-];
+const palabrasClave = {
+  triste: 'Siento que te sientes triste. ¿Quieres contarme qué ha pasado?',
+  rendir: 'No te rindas, lo estás haciendo mejor de lo que crees.',
+  "no puedo más": 'Es normal sentirse así a veces. Estoy contigo.',
+  solo: 'No estás solo/a, aquí estoy para escucharte.',
+  depresion: 'Gracias por confiarme cómo te sientes. Recuerda que hay ayuda disponible y tú vales mucho.',
+  suicidio: 'alerta',
+  matarme: 'alerta',
+  "me quiero morir": 'alerta'
+};
 
 function sendMessage() {
   const input = document.getElementById('userInput');
-  const text = input.value.trim().toLowerCase();
-  if (!text) return;
-  appendMessage('Usuario', text);
-  input.value = '';
-  localStorage.setItem('chatHistory', chatBox.innerHTML);
+  const texto = input.value.trim().toLowerCase();
+  if (!texto) return;
 
-  for (const grupo of respuestas) {
-    for (const palabra of grupo.palabras) {
-      if (text.includes(palabra)) {
-        if (grupo.alerta) {
-          emergencyBox.style.display = 'block';
-          appendMessage('Chatbot', 'Estoy preocupado por ti. Es importante que hables con alguien de confianza.');
-          return;
-        } else {
-          appendMessage('Chatbot', grupo.respuesta);
-          return;
-        }
+  appendMessage('Usuario', texto);
+  input.value = '';
+
+  let respuestaEncontrada = false;
+
+  for (const palabra in palabrasClave) {
+    if (texto.includes(palabra)) {
+      const respuesta = palabrasClave[palabra];
+      if (respuesta === 'alerta') {
+        emergencyBox.style.display = 'block';
+        appendMessage('Chatbot', 'Estoy preocupado por ti. Es importante que hables con alguien de confianza.');
+        respuestaEncontrada = true;
+        break;
+      } else {
+        appendMessage('Chatbot', respuesta);
+        respuestaEncontrada = true;
+        break;
       }
     }
   }
 
-  appendMessage('Chatbot', 'Gracias por compartir conmigo. Estoy aquí para apoyarte.');
+  if (!respuestaEncontrada) {
+    appendMessage('Chatbot', 'Gracias por compartir conmigo. Estoy aquí para apoyarte.');
+  }
+
+  localStorage.setItem('chatHistory', chatBox.innerHTML);
 }
 
-function appendMessage(sender, text) {
-  const msg = document.createElement('div');
-  msg.classList.add('message');
-  if (sender === 'Usuario') msg.classList.add('user');
-  msg.innerText = `${sender}: ${text}`;
-  chatBox.appendChild(msg);
+function appendMessage(remitente, mensaje) {
+  const div = document.createElement('div');
+  div.classList.add('message');
+  if (remitente === 'Usuario') div.classList.add('user');
+  div.innerText = `${remitente}: ${mensaje}`;
+  chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
-  localStorage.setItem('chatHistory', chatBox.innerHTML);
 }
 
 function guardarEstado() {
@@ -75,6 +65,6 @@ function guardarEstado() {
 
 // Cargar historial
 window.onload = () => {
-  const history = localStorage.getItem('chatHistory');
-  if (history) chatBox.innerHTML = history;
+  const historial = localStorage.getItem('chatHistory');
+  if (historial) chatBox.innerHTML = historial;
 };
