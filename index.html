@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apoyo Emocional</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Bienvenido a Tu Espacio Seguro</h1>
+    <p>Un lugar para expresar lo que sientes y recibir apoyo emocional.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>¿Qué es la depresión?</h2>
+      <p>La depresión es un trastorno del estado de ánimo que afecta cómo te sientes, piensas y manejas las actividades diarias. Es importante saber que no estás solo/a y que pedir ayuda es un paso valiente.</p>
+    </section>
+
+    <section>
+      <h2>¿Dónde pedir ayuda profesional?</h2>
+      <ul>
+        <li>Líneas de atención psicológica gratuitas</li>
+        <li>Hospitales y centros de salud mental</li>
+        <li>Organizaciones sin ánimo de lucro</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Técnicas para manejar la ansiedad y pensamientos negativos</h2>
+      <ul>
+        <li>Respiración consciente</li>
+        <li>Escritura emocional</li>
+        <li>Hablar con alguien de confianza</li>
+        <li>Hacer ejercicio suave o caminar</li>
+      </ul>
+    </section>
+
+    <section id="diario">
+      <h2>¿Cómo te sientes hoy?</h2>
+      <textarea id="estadoDiario" rows="5" style="width: 100%;"></textarea>
+      <button onclick="guardarEstado()">Guardar estado emocional</button>
+    </section>
+
+    <section id="chatbot">
+      <h2>Chatbot de apoyo emocional</h2>
+      <div class="chat-box" id="chatBox"></div>
+      <div class="chat-input">
+        <input type="text" id="userInput" placeholder="¿Cómo te sientes hoy?">
+        <button onclick="sendMessage()">Enviar</button>
+      </div>
+      <div class="emergency" id="emergencyBox">
+        ¡Alerta! Hemos detectado palabras de riesgo. Por favor, contacta ayuda profesional o llama a una línea de emergencia.
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
