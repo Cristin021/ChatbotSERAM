@@ -51,12 +51,12 @@ function appendMessage(remitente, mensaje) {
 
   if (remitente === 'Usuario') {
     div.classList.add('user');
-    div.innerText = `${remitente}: ${mensaje}`;
+    div.textContent = `${remitente}: ${mensaje}`;
   } else {
     div.innerHTML = `
       <div style="display: flex; align-items: center;">
-        <img src="images/bot-avatar.png" alt="Bot" style="width: 30px; height: 30px; margin-right: 10px; border-radius: 50%;">
-        <span>${mensaje}</span>
+        <img src="images/bot-avatar.png" alt="Bot" style="width: 40px; height: 40px; margin-right: 10px; border-radius: 50%;">
+        <span style="background: #e6eaff; padding: 8px 12px; border-radius: 12px;">${mensaje}</span>
       </div>
     `;
   }
@@ -81,3 +81,10 @@ window.onload = () => {
   if (historial) chatBox.innerHTML = historial;
 };
 
+// Enviar con Enter
+document.getElementById("userInput").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    sendMessage();
+  }
+});
