@@ -22,6 +22,11 @@ const palabrasClave = {
     'Recuerda que siempre hay alguien dispuesto a apoyarte.',
     'Aunque sientas soledad, no estás abandonado/a.'
   ],
+  sola: [
+    'No estás solo/a, aquí estoy para escucharte.',
+    'Recuerda que siempre hay alguien dispuesto a apoyarte.',
+    'Aunque sientas soledad, no estás abandonado/a.'
+  ],
   depresion: [
     'Gracias por confiarme cómo te sientes. Recuerda que hay ayuda disponible y tú vales mucho.',
     'La depresión no define tu valor, eres importante.',
