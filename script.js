@@ -2,11 +2,31 @@ const chatBox = document.getElementById('chatBox');
 const emergencyBox = document.getElementById('emergencyBox');
 
 const palabrasClave = {
-  triste: 'Siento que te sientes triste. ¿Quieres contarme qué ha pasado?',
-  rendir: 'No te rindas, lo estás haciendo mejor de lo que crees.',
-  "no puedo más": 'Es normal sentirse así a veces. Estoy contigo.',
-  solo: 'No estás solo/a, aquí estoy para escucharte.',
-  depresion: 'Gracias por confiarme cómo te sientes. Recuerda que hay ayuda disponible y tú vales mucho.',
+  triste: [
+    'Siento que te sientes triste. ¿Quieres contarme qué ha pasado?',
+    'A veces sentirse triste es normal, ¿quieres hablar más de eso?',
+    'Entiendo tu tristeza, recuerda que no estás solo/a.'
+  ],
+  rendir: [
+    'No te rindas, lo estás haciendo mejor de lo que crees.',
+    'A veces parece difícil, pero cada paso que das cuenta.',
+    'No olvides que eres más fuerte de lo que piensas.'
+  ],
+  "no puedo más": [
+    'Es normal sentirse así a veces. Estoy contigo.',
+    'Respira, tómate un momento. No estás solo/a.',
+    'A veces la carga se siente pesada, pero no estás sin apoyo.'
+  ],
+  solo: [
+    'No estás solo/a, aquí estoy para escucharte.',
+    'Recuerda que siempre hay alguien dispuesto a apoyarte.',
+    'Aunque sientas soledad, no estás abandonado/a.'
+  ],
+  depresion: [
+    'Gracias por confiarme cómo te sientes. Recuerda que hay ayuda disponible y tú vales mucho.',
+    'La depresión no define tu valor, eres importante.',
+    'Hablar de lo que sientes es un paso valiente, gracias por compartirlo.'
+  ],
   suicidio: 'alerta',
   matarme: 'alerta',
   "me quiero morir": 'alerta'
@@ -25,13 +45,16 @@ function sendMessage() {
   for (const palabra in palabrasClave) {
     if (texto.includes(palabra)) {
       const respuesta = palabrasClave[palabra];
+
       if (respuesta === 'alerta') {
         emergencyBox.style.display = 'block';
         appendMessage('Bot', 'Estoy preocupado por ti. Es importante que hables con alguien de confianza.');
         respuestaEncontrada = true;
         break;
       } else {
-        appendMessage('Bot', respuesta);
+        // Seleccionar aleatoriamente una respuesta
+        const randomIndex = Math.floor(Math.random() * respuesta.length);
+        appendMessage('Bot', respuesta[randomIndex]);
         respuestaEncontrada = true;
         break;
       }
