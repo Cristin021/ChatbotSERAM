@@ -228,6 +228,57 @@ const palabrasClave = {
   'terminar conmigo': 'alerta'
 };
 
+// ====== Banner de emergencia (amable y contenedor) ======
+function showEmergencyBanner(textoOriginal) {
+  if (!emergencyBox) return;
+  const msgWA = `Hola, necesito apoyo ahora mismo. Esto fue lo que escribí: "${textoOriginal}". ¿Podemos hablar?`;
+
+  emergencyBox.style.display = 'block';
+  emergencyBox.setAttribute('aria-live', 'polite');
+  emergencyBox.innerHTML = `
+    <div style="
+      background:#fff7fb;
+      border:1px solid #f3c6e3;
+      color:#5b2a4f;
+      padding:14px 16px;
+      border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.04);
+      font-size:15px;
+      line-height:1.5;">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div style="font-size:22px">💛</div>
+        <div>
+          <strong>Estoy contigo.</strong> Percibo que esto es importante y no tienes que afrontarlo solo/a.
+          <br/>Voy a abrir <strong>WhatsApp</strong> para que puedas hablar con alguien de confianza ahora mismo.
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+            <button id="btnAbrirWA" style="
+              background:#7c3aed;color:white;border:none;padding:8px 12px;border-radius:10px;cursor:pointer;">
+              Abrir WhatsApp ahora
+            </button>
+            <button id="btnRespirar" style="
+              background:#eef2ff;color:#3730a3;border:none;padding:8px 12px;border-radius:10px;cursor:pointer;">
+              Hacer una respiración 4–4–6
+            </button>
+          </div>
+          <small style="display:block;margin-top:8px;color:#7a6b74;">
+            Si la nueva pestaña no se abre, por favor toca “Abrir WhatsApp ahora”.
+          </small>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // acciones
+  const abrir = () => enviarWhatsApp(msgWA);
+  document.getElementById('btnAbrirWA')?.addEventListener('click', abrir);
+  document.getElementById('btnRespirar')?.addEventListener('click', () => {
+    appendMessage('Bot', 'Probemos juntos/as: inhala 4, sostén 4, exhala 6. Repite 3 veces. Dime si baja 1 punto (0 a 10).');
+  });
+
+  // intento de apertura automática (por si el navegador lo permite)
+  abrir();
+}
+
 // ====== Envío de mensaje ======
 function sendMessage() {
   const input = document.getElementById('userInput');
@@ -247,13 +298,9 @@ function sendMessage() {
       const respuesta = palabrasClave[clave];
 
       if (respuesta === 'alerta') {
-        // Mensaje breve y redirección inmediata a WhatsApp
-        appendMessage('Bot', 'Detecto riesgo. Priorizamos tu seguridad ahora y abrimos un canal de ayuda inmediata.');
-        const msgWA = `Hola, necesito apoyo ahora mismo. Esto fue lo que escribí: "${textoOriginal}". ¿Podemos hablar?`;
-        enviarWhatsApp(msgWA); // nueva pestaña
-
-        // (Opcional) muestra caja de emergencia si existe
-        if (emergencyBox) emergencyBox.style.display = 'block';
+        // Mensaje AMABLE + banner + redirección a WhatsApp
+        appendMessage('Bot', 'Gracias por confiar esto conmigo. 💛 Tu bienestar es prioridad; busquemos apoyo inmediato y seguro.');
+        showEmergencyBanner(textoOriginal);
         respuestaEncontrada = true;
         break;
       } else if (Array.isArray(respuesta)) {
