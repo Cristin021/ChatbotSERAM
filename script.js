@@ -3,7 +3,7 @@ const chatBox = document.getElementById('chatBox');
 const emergencyBox = document.getElementById('emergencyBox');
 
 // ====== Config WhatsApp ======
-const WHATSAPP_NUMBER = '573114140899'; // sin '+'
+const WHATSAPP_NUMBER = '573194880062'; // sin '+'
 
 function enviarWhatsApp(mensaje) {
   const texto = encodeURIComponent(mensaje);
