@@ -8,7 +8,7 @@ const WHATSAPP_NUMBER = '573114140899'; // sin '+'
 function enviarWhatsApp(mensaje) {
   const texto = encodeURIComponent(mensaje);
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${texto}`;
-  window.location.href = url; // redirige directo en la misma pestaña
+  window.open(url, '_blank'); // abre en una nueva pestaña
 }
 
 // ====== Utilidades ======
@@ -206,7 +206,7 @@ function sendMessage() {
       if (respuesta === 'alerta') {
         appendMessage('Bot', '¡Alerta detectada! Te estamos redirigiendo a WhatsApp para buscar ayuda inmediata...');
         const msgWA = `Hola, necesito apoyo ahora mismo. Esto fue lo que escribí: "${textoOriginal}". ¿Podemos hablar?`;
-        enviarWhatsApp(msgWA); // redirige directo
+        enviarWhatsApp(msgWA); // abre WhatsApp en nueva pestaña
         respuestaEncontrada = true;
         break;
       } else if (Array.isArray(respuesta)) {
