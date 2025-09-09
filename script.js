@@ -8,7 +8,7 @@ const WHATSAPP_NUMBER = '573114140899'; // sin '+'
 function enviarWhatsApp(mensaje) {
   const texto = encodeURIComponent(mensaje);
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${texto}`;
-  window.open(url, '_blank'); // abre en una nueva pestaña
+  window.open(url, '_blank'); // abre en nueva pestaña
 }
 
 // ====== Utilidades ======
@@ -22,119 +22,151 @@ function pickRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// ====== Respuestas genéricas (fallback) ======
+// ====== Respuestas genéricas (terapéuticas, fallback) ======
 const respuestasGenericas = [
-  'Gracias por compartir conmigo. Estoy aquí para apoyarte.',
-  'Entiendo lo que dices, y quiero que sepas que no estás solo/a.',
-  'Lo que sientes es válido, gracias por expresarlo.',
-  'Estoy aquí para escucharte y acompañarte.',
-  'Tus palabras son importantes, gracias por confiar en mí.',
-  'No estás solo/a en esto, puedes contar conmigo.',
-  'Sé que no es fácil hablar de lo que sientes, valoro mucho que lo hagas.',
-  'Gracias por abrirte. Estoy contigo en esto.',
-  'Aprecio que lo compartas; podemos atravesarlo paso a paso.'
+  'Gracias por compartirlo. Tomarte el tiempo para ponerlo en palabras ya es un paso importante. ¿Qué parte te pesa más ahora mismo?',
+  'Estoy aquí contigo. Lo que sientes es válido, y podemos explorarlo con calma. ¿Qué ha pasado hoy que activó estas emociones?',
+  'Te escucho. Si te parece, comencemos por lo más urgente o lo más difícil de decir. ¿Qué te ayudaría en este momento?',
+  'Notar lo que sientes es valiente. Respiremos juntos: inhala 4, sostén 4, exhala 6. ¿Qué cambia en tu cuerpo al hacerlo?',
+  'Agradezco tu confianza. Podemos ordenar esto paso a paso. ¿Qué apoyo has tenido antes que te haya servido?',
+  'No estás solo/a en esto. Podemos identificar una acción pequeña y concreta para hoy. ¿Cuál te haría sentir 1% mejor?',
+  'Lo que atraviesas tiene sentido con tu historia. Pongamos límites amables a la autoexigencia. ¿Qué necesitas ahora mismo?'
 ];
 
-// ====== Grupos de respuestas ======
+// ====== Grupos de respuestas con enfoque clínico ======
+// Tristeza
 const respuestasTriste = [
-  'Siento que te sientes triste. ¿Quieres contarme qué ha pasado?',
-  'A veces sentirse triste es normal, ¿quieres hablar más de eso?',
-  'Entiendo tu tristeza, recuerda que no estás solo/a.'
+  'Siento la tristeza que estás describiendo. Tiene sentido que duela. ¿Dónde la sientes en el cuerpo ahora mismo?',
+  'Gracias por ponerle nombre a esa tristeza. ¿Qué la ha intensificado últimamente y qué suele aliviarla aunque sea un poco?',
+  'Estar triste no significa estar roto/a; es una señal. ¿Qué necesitarías de ti o de alguien cercano hoy para sentirte acompañado/a?'
 ];
+
+// “Rendirse”
 const respuestasRendir = [
-  'No te rindas, lo estás haciendo mejor de lo que crees.',
-  'A veces parece difícil, pero cada paso que das cuenta.',
-  'No olvides que eres más fuerte de lo que piensas.'
+  'Esa sensación de rendirse suele aparecer cuando has sostenido mucho por tiempo prolongado. ¿Qué presión podríamos bajar hoy?',
+  'No es fracaso: es cansancio. Probemos una pausa breve y consciente (2 minutos de respiración). ¿Te acompaño a hacerlo?',
+  'Mereces descansar sin culpas. Pensemos en una meta mínima y alcanzable para hoy. ¿Cuál podría ser?'
 ];
+
+// “No puedo más”
 const respuestasNoPuedoMas = [
-  'Es normal sentirse así a veces. Estoy contigo.',
-  'Respira, tómate un momento. No estás solo/a.',
-  'A veces la carga se siente pesada, pero no estás sin apoyo.'
+  'Cuando sientes que no puedes más, el sistema nervioso está saturado. Hagamos “5-4-3-2-1” (mira 5 cosas, toca 4, oye 3, huele 2, saborea 1). ¿Qué notas?',
+  'Tiene sentido que se sienta abrumador. Pongamos nombre a una sola preocupación y miremosla juntas/os. ¿Cuál eliges?',
+  'Estás haciendo lo mejor que puedes con lo que tienes. ¿Qué apoyo práctico o emocional te ayudaría en la próxima hora?'
 ];
+
+// Soledad
 const respuestasSoledad = [
-  'No estás solo/a, aquí estoy para escucharte.',
-  'Recuerda que siempre hay alguien dispuesto a apoyarte.',
-  'Aunque sientas soledad, no estás abandonado/a.'
+  'La soledad duele porque estamos hechos para vincularnos. ¿Hay alguien seguro a quien escribir un mensaje breve ahora?',
+  'Aislarse a veces protege, pero también aísla del alivio. ¿Te gustaría planear un microencuentro (10 min) con alguien de confianza?',
+  'Podemos ensayar juntos un mensaje simple para pedir compañía. ¿Te muestro un ejemplo?'
 ];
+
+// Depresión
 const respuestasDepresion = [
-  'Gracias por confiarme cómo te sientes. Recuerda que hay ayuda disponible y tú vales mucho.',
-  'La depresión no define tu valor, eres importante.',
-  'Hablar de lo que sientes es un paso valiente, gracias por compartirlo.'
+  'La depresión no define tu valor. Notar tus ritmos y cuidar tu energía es terapia también. ¿Qué actividad suave (ducha, caminar 5 min) es viable hoy?',
+  'Validemos tu ritmo: pequeño, constante y amable. ¿Qué señal temprana notas cuando el ánimo baja y qué podrías hacer en ese momento?',
+  'Busquemos anclajes: sueño más regular, hidratación, luz natural. ¿Cuál de estos es más accesible hoy para ti?'
 ];
+
+// Ansiedad
 const respuestasAnsiedad = [
-  'Respira profundo, a veces la ansiedad nos engaña haciéndonos sentir en peligro cuando no lo estamos.',
-  'Entiendo tu ansiedad, ¿quieres que pensemos juntos en algo que pueda tranquilizarte?',
-  'Estás haciendo lo mejor que puedes, y eso ya es suficiente.'
+  'La ansiedad suele sobredimensionar el peligro. Probemos respiración 4-4-6 tres veces; dime si baja 1 punto de 0 a 10.',
+  'Pongamos la preocupación por escrito: ¿cuál es la predicción? ¿qué evidencia a favor y en contra encuentras?',
+  'Si tu cuerpo está en alerta, demos movimiento breve (estira hombros/cuello 60 segundos). ¿Cómo cambia la tensión?'
 ];
+
+// Miedo
 const respuestasMiedo = [
-  'El miedo es una emoción válida, pero no te controla. Estoy contigo.',
-  'No estás solo/a enfrentando ese miedo.',
-  'Es valiente reconocer cuando algo nos asusta.'
+  'El miedo intenta protegerte. Acerquémonos con curiosidad: ¿qué intenta advertirte y qué parte sí puedes controlar hoy?',
+  'Nombrarlo ya lo regula. ¿Qué recursos personales has usado antes cuando apareció un miedo similar?',
+  'Pauta de seguridad: decide un paso pequeño y reversible. ¿Cuál sería un “primer paso seguro”?'
 ];
+
+// Cansancio
 const respuestasCansancio = [
-  'Descansar también es importante, mereces una pausa.',
-  'Estás haciendo mucho, y es normal sentirse cansado/a.',
-  'Tu bienestar importa, escucha a tu cuerpo y tu mente.'
+  'Tu cuerpo te está pidiendo pausa. El descanso no se gana, se necesita. ¿Qué microdescanso (5-10 min) puedes hacer ahora?',
+  'Señal de sobrecarga detectada. Probemos “descanso activo”: respirar, hidratar y mover piernas 2 minutos. ¿Lo intentamos?',
+  'Permítete bajar el estándar hoy. ¿Qué puedes quitar o delegar para recuperar energía?'
 ];
+
+// Fracaso
 const respuestasFracaso = [
-  'El fracaso no te define, es solo una oportunidad de aprendizaje.',
-  'Todos fallamos en algún momento, y eso nos ayuda a crecer.',
-  'Un tropiezo no borra todo tu esfuerzo ni tu valor.'
+  'Fracasar es parte del aprendizaje, no una identidad. ¿Qué aprendizaje específico rescatas de esto?',
+  'Separar resultado de valor personal ayuda: hiciste lo que pudiste con lo que sabías. ¿Qué harías distinto con la info de hoy?',
+  'Practiquemos autocompasión: háblate como le hablarías a un buen amigo en la misma situación. ¿Qué le dirías?'
 ];
+
+// Enojo
 const respuestasEnojo = [
-  'Está bien sentir enojo, es una emoción válida.',
-  'A veces expresarlo de forma sana ayuda a liberar esa tensión.',
-  'Gracias por compartir lo que sientes, incluso el enojo merece ser escuchado.'
+  'El enojo señala un límite. Expresemos sin agresión: “cuando pasa X, me siento Y y necesito Z”. ¿Quieres practicarlo?',
+  'Valido tu enojo; cuidemos el canal. Descarga física breve (apretar toalla, 30 seg) y luego palabras claras. ¿Te acompaño?',
+  '¿Qué valor se ve vulnerado (respeto, justicia, tiempo)? Nombrarlo orienta la acción saludable.'
 ];
+
+// Familia / conflictos
 const respuestasFamilia = [
-  'Las discusiones en la familia pueden doler mucho, entiendo cómo te sientes.',
-  'A veces los conflictos con la familia son difíciles, pero hablar de ello ayuda.',
-  'La familia es importante, pero también lo eres tú. Tus emociones cuentan.',
-  'Aunque tengas problemas con tu familia, no estás solo/a en esto.'
+  'Los conflictos familiares tocan fibras profundas. ¿Qué límite sano te gustaría poner y cómo podríamos comunicarlo?',
+  'Puedes cuidar el vínculo y cuidarte a ti. Ensayemos una frase breve y respetuosa para esa conversación difícil.',
+  'Diferenciemos el problema de las personas. ¿Cuál es la necesidad no cubierta que podrías expresar?'
 ];
+
+// Desesperanza / “no tengo salida”
 const respuestasNoTengoSalida = [
-  'Puede sentirse así, pero siempre hay caminos que aún no se ven.',
-  'Aunque parezca oscuro, no estás solo/a en esto.',
-  'Las soluciones a veces tardan, pero existen.'
+  'Que parezca sin salida no significa que no la haya. Busquemos dos opciones imperfectas pero posibles.',
+  'Cuando la mente dice “nada sirve”, suele estar agotada. Hagamos un mapa de alternativas: ¿qué sería el 1% de mejora?',
+  'Miremos el horizonte cercano: solo hoy. ¿Qué acción mínima te mantiene a salvo y contenido/a?'
 ];
+
+// Vacío
 const respuestasVacio = [
-  'Esa sensación puede ser muy dura, pero hablarlo ya es un gran paso.',
-  'Aunque sientas vacío, tu vida tiene valor y significado.',
-  'No estás solo/a con ese sentimiento, estoy aquí.'
+  'Esa sensación de vacío puede ser un adormecimiento protector. ¿Qué pequeña experiencia con sentido podrías probar hoy (música, luz, contacto)?',
+  'Devolvamos textura al día: algo para el cuerpo, algo para la mente y algo para el vínculo. ¿Qué elegirías?',
+  'No tienes que llenarlo todo ahora. Empecemos por notar sin juicios lo que aparece en ti.'
 ];
+
+// Sin sentido
 const respuestasSinSentido = [
-  'A veces la vida parece no tener sentido, pero tu existencia importa.',
-  'Tus sentimientos son válidos, y tu valor no depende de lo que sientas en este momento.',
-  'Hablemos de lo que sientes, no tienes que cargarlo solo/a.'
+  'Cuando la vida parece sin sentido, conviene abreviar el zoom temporal: miremos solo este día. ¿Qué gesto amable contigo puedes hacer hoy?',
+  'Conectar con valores reenciende sentido. ¿Qué valor quisieras honrar en una acción pequeña (cuidado, honestidad, servicio)?',
+  'Preguntarte por el sentido ya es un movimiento vital. Podemos explorar lo que te importa sin prisa.'
 ];
+
+// Autoestima negativa / autocríticas
 const respuestasSoyUnAsco = [
-  'Entiendo que te sientas así, pero no eres un asco. Tu vida tiene valor.',
-  'A veces los pensamientos negativos nos engañan, pero no definen quién eres.',
-  'Aunque te sientas así, recuerda que eres importante y valioso/a.'
+  'Esa voz crítica suena fuerte, pero no es la verdad completa. ¿Qué evidencia suave tienes a tu favor hoy?',
+  'Hablemos con esa voz como si fuera un visitante: “te escucho, pero no decides por mí”. ¿Qué te dice la parte compasiva?',
+  'Tu valor no depende de un momento difícil. ¿Qué cualidad tuya ha estado presente incluso en días duros?'
 ];
+
 const respuestasNoSirvo = [
-  'Ese sentimiento es muy duro, pero no es verdad: todos tenemos valor.',
-  'Puedes sentirte inútil a veces, pero tu vida impacta más de lo que crees.',
-  'Ese pensamiento no te define: tienes mucho que aportar.'
+  'Sentirte “inútil” duele. Distingamos habilidad de valor: puedes aprender sin que tu valor cambie. ¿Qué microhabilidad practicar hoy?',
+  '¿Recuerdas una situación donde sí fuiste de ayuda? Rescata 1 acción replicable.',
+  'Transformemos el juicio en objetivo: ¿qué te gustaría mejorar y cuál sería el primer paso concreto?'
 ];
+
 const respuestasNoValgo = [
-  'Tú vales mucho más de lo que piensas en este momento.',
-  'Aunque sientas que no vales nada, tu existencia importa.',
-  'No dejes que ese pensamiento te engañe, tu valor es real.'
+  'Tu valor es inherente; no depende del rendimiento. ¿Qué gesto de autocuidado harías si creyeras eso por 10 minutos?',
+  'Observa cómo te hablas. Probemos una frase compasiva breve y realista. ¿Cuál te resuena?',
+  'Valorar no es inflar: es reconocer lo que ya hay. ¿Qué pequeño logro pasó inadvertido hoy?'
 ];
+
 const respuestasSoyCarga = [
-  'Entiendo que te sientas así, pero no eres una carga. Eres importante.',
-  'A veces pensamos que molestamos, pero tu vida tiene sentido.',
-  'No eres una carga, mereces amor y apoyo.'
+  'Sentirte carga es muy doloroso; suele aparecer con cansancio y culpa. ¿Qué evidencia contradice un poco esa idea?',
+  'Pedir ayuda no te hace carga; nos humaniza. ¿A quién podrías pedirle algo concreto y pequeño?',
+  'Distribuyamos peso: ¿qué tareas puedes posponer, delegar o simplificar esta semana?'
 ];
+
+// Violencia sexual (enfoque trauma-informado)
 const respuestasViolenciaSexual = [
-  'Lamento mucho que estés pasando por algo tan doloroso. No tienes que enfrentarlo solo/a.',
-  'Hablar de una experiencia así es muy difícil, pero es importante que lo compartas con alguien de confianza.',
-  'Lo que te pasó no es tu culpa. Contarlo puede ser un primer paso para recibir el apoyo que mereces.'
+  'Lamento profundamente que hayas vivido eso. No es tu culpa. Podemos priorizar tu seguridad ahora. ¿Estás en un lugar seguro?',
+  'Gracias por confiar algo tan difícil. Puedes elegir qué y cuánto contar. ¿Te gustaría que pensemos en a quién acudir de forma segura?',
+  'Cuidar tu cuerpo y tu mente es prioridad. Considera atención médica y acompañamiento especializado cuando te sientas lista/o. Puedo ayudarte a planear ese paso.'
 ];
 
 // ====== Diccionario de palabras clave ======
 const palabrasClave = {
+  // Emociones negativas
   'triste': respuestasTriste,
   'rendir': respuestasRendir,
   'no puedo mas': respuestasNoPuedoMas,
@@ -151,6 +183,8 @@ const palabrasClave = {
   'enojo': respuestasEnojo,
   'enojado': respuestasEnojo,
   'enojada': respuestasEnojo,
+
+  // Familia y cercanos
   'familia': respuestasFamilia,
   'papas': respuestasFamilia,
   'papás': respuestasFamilia,
@@ -162,15 +196,21 @@ const palabrasClave = {
   'hermano': respuestasFamilia,
   'hermana': respuestasFamilia,
   'hermanos': respuestasFamilia,
+
+  // Desesperanza
   'no tengo salida': respuestasNoTengoSalida,
   'quiero desaparecer': 'alerta',
   'me siento vacio': respuestasVacio,
   'me siento vacío': respuestasVacio,
   'sin sentido': respuestasSinSentido,
+
+  // Autoestima negativa
   'soy un asco': respuestasSoyUnAsco,
   'no sirvo para nada': respuestasNoSirvo,
   'no valgo nada': respuestasNoValgo,
   'soy una carga': respuestasSoyCarga,
+
+  // Violencia sexual
   'violacion': respuestasViolenciaSexual,
   'violación': respuestasViolenciaSexual,
   'me violaron': respuestasViolenciaSexual,
@@ -178,6 +218,8 @@ const palabrasClave = {
   'fui violada': respuestasViolenciaSexual,
   'abuso sexual': respuestasViolenciaSexual,
   'abuso': respuestasViolenciaSexual,
+
+  // ALERTAS directas (riesgo)
   'suicidio': 'alerta',
   'matarme': 'alerta',
   'me quiero morir': 'alerta',
@@ -198,15 +240,20 @@ function sendMessage() {
   const texto = normalizarTexto(textoOriginal);
   let respuestaEncontrada = false;
 
+  // Buscar coincidencias
   for (const clave in palabrasClave) {
     const claveNorm = normalizarTexto(clave);
     if (texto.includes(claveNorm)) {
       const respuesta = palabrasClave[clave];
 
       if (respuesta === 'alerta') {
-        appendMessage('Bot', '¡Alerta detectada! Te estamos redirigiendo a WhatsApp para buscar ayuda inmediata...');
+        // Mensaje breve y redirección inmediata a WhatsApp
+        appendMessage('Bot', 'Detecto riesgo. Priorizamos tu seguridad ahora y abrimos un canal de ayuda inmediata.');
         const msgWA = `Hola, necesito apoyo ahora mismo. Esto fue lo que escribí: "${textoOriginal}". ¿Podemos hablar?`;
-        enviarWhatsApp(msgWA); // abre WhatsApp en nueva pestaña
+        enviarWhatsApp(msgWA); // nueva pestaña
+
+        // (Opcional) muestra caja de emergencia si existe
+        if (emergencyBox) emergencyBox.style.display = 'block';
         respuestaEncontrada = true;
         break;
       } else if (Array.isArray(respuesta)) {
@@ -221,6 +268,7 @@ function sendMessage() {
     }
   }
 
+  // Fallback terapéutico
   if (!respuestaEncontrada) {
     appendMessage('Bot', pickRandom(respuestasGenericas));
   }
@@ -260,13 +308,13 @@ function guardarEstado() {
   }
 }
 
-// ====== Cargar historial ======
+// ====== Cargar historial e iniciar con saludo ======
 window.onload = () => {
   const historial = localStorage.getItem('chatHistory');
   if (historial) {
     chatBox.innerHTML = historial;
   } else {
-    appendMessage('Bot', 'Hola 👋 ¿cómo estás hoy?');
+    appendMessage('Bot', 'Hola 👋 Estoy aquí para acompañarte con respeto y cuidado. ¿Cómo estás hoy, de 0 a 10?');
     localStorage.setItem('chatHistory', chatBox.innerHTML);
   }
 };
