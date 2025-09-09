@@ -2,6 +2,16 @@
 const chatBox = document.getElementById('chatBox');
 const emergencyBox = document.getElementById('emergencyBox');
 
+// ====== Config WhatsApp ======
+const WHATSAPP_NUMBER = '573114140899';
+
+function enviarWhatsApp(mensaje) {
+  const texto = encodeURIComponent(mensaje);
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${texto}`;
+  // Redirección inmediata
+  window.location.assign(url);
+}
+
 // ====== Utilidades ======
 // Quita tildes/diacríticos y pasa a minúsculas para mejorar los matches
 function normalizarTexto(s) {
@@ -232,8 +242,14 @@ function sendMessage() {
       const respuesta = palabrasClave[clave];
 
       if (respuesta === 'alerta') {
+        // Mostrar caja de emergencia
         emergencyBox.style.display = 'block';
         appendMessage('Bot', 'Estoy preocupado por ti. Es importante que hables con alguien de confianza.');
+
+        // Redirigir inmediatamente a WhatsApp con un texto prellenado
+        const msgWA = `Hola, necesito apoyo ahora mismo. Esto fue lo que escribí: "${textoOriginal}". ¿Podemos hablar?`;
+        enviarWhatsApp(msgWA);
+
         respuestaEncontrada = true;
         break;
       } else if (Array.isArray(respuesta)) {
