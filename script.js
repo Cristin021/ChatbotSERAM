@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://ryjymecgfijhqrpryckk.supabase.co";
-const SUPABASE_ANON_KEY = "TU_CLAVE_sb_publishable";
+const SUPABASE_ANON_KEY = "sb_publishable_zKdiysKDcnsxJnReJM7RsQ_Gn0Is3Lh";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ====== Referencias del DOM ======
