@@ -44,17 +44,14 @@ async function guardarConversacion(userMessage, botReply) {
       {
         session_id: obtenerSessionId(),
         user_message: userMessage,
-        bot_reply: botReply,
-        page_url: window.location.href,
-        riesgo: null,
-        consentimiento: true
+        bot_reply: botReply
       }
     ]);
 
   if (error) {
-    console.error("Error guardando:", error);
+    console.error("Error:", error);
   } else {
-    console.log("Guardado en Supabase 🔥");
+    console.log("Guardado OK");
   }
 }
 // ====== Respuestas genéricas (terapéuticas, fallback) ======
