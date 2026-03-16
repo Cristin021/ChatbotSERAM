@@ -318,13 +318,43 @@ function showEmergencyBanner(textoOriginal) {
 function sendMessage() {
   const input = document.getElementById('userInput');
   const textoOriginal = input.value.trim();
+
   if (!textoOriginal) return;
 
+  // Mostrar mensaje del usuario
   appendMessage('Usuario', textoOriginal);
   input.value = '';
 
   const texto = normalizarTexto(textoOriginal);
   let respuestaEncontrada = false;
+  let respuestaBot = "";
+
+  // Buscar coincidencias
+  for (const clave in palabrasClave) {
+    const claveNorm = normalizarTexto(clave);
+
+    if (texto.includes(claveNorm)) {
+      respuestaBot = palabrasClave[clave];
+      appendMessage('Bot', respuestaBot);
+      respuestaEncontrada = true;
+      break;
+    }
+  }
+
+  // Si no encontró respuesta
+  if (!respuestaEncontrada) {
+    respuestaBot = pickRandom(respuestasGenericas);
+    appendMessage('Bot', respuestaBot);
+  }
+
+  // 🚀 GUARDAR EN SUPABASE 
+  guardarConversacion(textoOriginal, respuestaBot);
+
+  // Guardar historial local
+  localStorage.setItem("chatHistory", chatBox.innerHTML);
+}
+
+  
 
   // Buscar coincidencias
   for (const clave in palabrasClave) {
