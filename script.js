@@ -38,7 +38,9 @@ function obtenerSessionId() {
 }
 
 async function guardarConversacion(userMessage, botReply) {
-  const { error } = await supabaseClient
+  console.log("Intentando guardar...", { userMessage, botReply });
+
+  const { data, error } = await supabaseClient
     .from("mensajes_chatbot")
     .insert([
       {
@@ -46,12 +48,13 @@ async function guardarConversacion(userMessage, botReply) {
         user_message: userMessage,
         bot_reply: botReply
       }
-    ]);
+    ])
+    .select();
 
   if (error) {
-    console.error("Error:", error);
+    console.error("Error Supabase:", error);
   } else {
-    console.log("Guardado OK");
+    console.log("Guardado OK:", data);
   }
 }
 // ====== Respuestas genéricas (terapéuticas, fallback) ======
