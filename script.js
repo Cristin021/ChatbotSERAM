@@ -1,3 +1,7 @@
+const SUPABASE_URL = "https://ryjymecgfijhqrpryckk.supabase.co";
+const SUPABASE_ANON_KEY = "TU_CLAVE_sb_publishable";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ====== Referencias del DOM ======
 const chatBox = document.getElementById('chatBox');
 const emergencyBox = document.getElementById('emergencyBox');
@@ -22,6 +26,37 @@ function pickRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+function obtenerSessionId() {
+  let sessionId = localStorage.getItem("seram_session_id");
+
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem("seram_session_id", sessionId);
+  }
+
+  return sessionId;
+}
+
+async function guardarConversacion(userMessage, botReply) {
+  const { error } = await supabaseClient
+    .from("mensajes_chatbot")
+    .insert([
+      {
+        session_id: obtenerSessionId(),
+        user_message: userMessage,
+        bot_reply: botReply,
+        page_url: window.location.href,
+        riesgo: null,
+        consentimiento: true
+      }
+    ]);
+
+  if (error) {
+    console.error("Error guardando:", error);
+  } else {
+    console.log("Guardado en Supabase 🔥");
+  }
+}
 // ====== Respuestas genéricas (terapéuticas, fallback) ======
 const respuestasGenericas = [
   'Gracias por compartirlo. Tomarte el tiempo para ponerlo en palabras ya es un paso importante. ¿Qué parte te pesa más ahora mismo?',
@@ -320,7 +355,9 @@ function sendMessage() {
     appendMessage('Bot', pickRandom(respuestasGenericas));
   }
 
-  localStorage.setItem('chatHistory', chatBox.innerHTML);
+guardarConversacion(textoOriginal, "respuesta_generada");
+
+localStorage.setItem("chatHistory", chatBox.innerHTML);
 }
 
 // ====== Render de mensajes ======
