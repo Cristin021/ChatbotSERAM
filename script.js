@@ -42,11 +42,11 @@ async function guardarConversacion(userMessage, botReply) {
 
   const { data, error } = await supabaseClient
     .from("mensajes_chatbot")
-    .insert([
+    .insert([  
       {
-        session_id: obtenerSessionId(),
-        user_message: userMessage,
-        bot_reply: botReply
+    session_id: obtenerSessionId(),
+    user_message: userMessage,
+    bot_reply: botReply
       }
     ])
     .select();
