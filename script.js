@@ -1,7 +1,3 @@
-const SUPABASE_URL = "https://ryjymecgfijhqrpryckk.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_zKdiysKDcnsxJnReJM7RsQ_Gn0Is3Lh";
-
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ====== Referencias del DOM ======
 const chatBox = document.getElementById('chatBox');
 const emergencyBox = document.getElementById('emergencyBox');
@@ -24,38 +20,6 @@ function normalizarTexto(s) {
 }
 function pickRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
-}
-
-function obtenerSessionId() {
-  let sessionId = localStorage.getItem("seram_session_id");
-
-  if (!sessionId) {
-    sessionId = crypto.randomUUID();
-    localStorage.setItem("seram_session_id", sessionId);
-  }
-
-  return sessionId;
-}
-
-async function guardarConversacion(userMessage, botReply) {
-  console.log("Intentando guardar...", { userMessage, botReply });
-
-  const { data, error } = await supabaseClient
-    .from("mensajes_chatbot")
-    .insert([  
-      {
-    session_id: obtenerSessionId(),
-    user_message: userMessage,
-    bot_reply: botReply
-      }
-    ])
-    .select();
-
-  if (error) {
-    console.error("Error Supabase:", error);
-  } else {
-    console.log("Guardado OK:", data);
-  }
 }
 // ====== Respuestas genéricas (terapéuticas, fallback) ======
 const respuestasGenericas = [
@@ -316,11 +280,14 @@ function showEmergencyBanner(textoOriginal) {
 
 // ====== Envío de mensaje ======
 function sendMessage() {
-  const input = document.getElementBy('userInput');
+  const input = document.getElementById('userInput');
   const textoOriginal = input.value.trim();
   if (!textoOriginal) return;
 
   appendMessage('Usuario', textoOriginal);
+  input.value = '';
+
+  const texto = normalizarTexto(textoOriginal);
   let respuestaEncontrada = false;
 
   // Buscar coincidencias
@@ -352,9 +319,7 @@ function sendMessage() {
     appendMessage('Bot', pickRandom(respuestasGenericas));
   }
 
-guardarConversacion(textoOriginal, "respuesta_generada");
-
-localStorage.setItem("chatHistory", chatBox.innerHTML);
+  localStorage.setItem('chatHistory', chatBox.innerHTML);
 }
 
 // ====== Render de mensajes ======
