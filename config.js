@@ -1,3 +1,10 @@
+// Configuración de Supabase para SERAM
+window.SERAM_CONFIG = {
+  SUPABASE_URL: 'https://iasckiqeoaayrknqpgwp.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlhc2NraXFlb2FheXJrbnFwZ3dwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE5MTY0OTgsImV4cCI6MjEwNzQ5MjQ5OH0._usEgMoVDsoVeZxE9eRozzwtUikOB5h60oyJtv5JIiI'
+};
+
+
 // SERAM · login + base de datos. Se carga DESPUÉS de script.js (no hay que editar script.js).
 // Si config.js está vacío funciona en "modo demostración" (datos solo en este navegador).
 (() => {
